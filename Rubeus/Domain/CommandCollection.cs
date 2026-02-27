@@ -57,6 +57,21 @@ namespace Rubeus.Domain
                 commandWasFound= false;
             else
             {
+                // Check for Windows-only commands when running on non-Windows platforms
+                if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    List<string> windowsOnlyCommands = new List<string> { 
+                        "dump", "ptt", "purge", "triage", "klist", "createnetonly", 
+                        "monitor", "harvest", "tgtdeleg", "currentluid", "logonsession"
+                    };
+
+                    if (windowsOnlyCommands.Contains(commandName.ToLower()))
+                    {
+                        Console.WriteLine($"\r\n[X] The '{commandName}' command relies on Windows-specific APIs (LSA, WMI, Win32) and is not supported on this platform.\r\n");
+                        return true;
+                    }
+                }
+
                 // Create the command object 
                 var command = _availableCommands[commandName].Invoke();
                 

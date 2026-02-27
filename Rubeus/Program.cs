@@ -101,6 +101,11 @@ namespace Rubeus
 
         private static bool IsConsolePresent()
         {
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+            {
+                // On Linux/Unix, assume console is always present or handle differently
+                return true;
+            }
             return Interop.GetConsoleWindow() != IntPtr.Zero;
         }
 
