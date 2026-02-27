@@ -9,6 +9,8 @@
     <!-- Ignore platform compatibility warnings for cross-platform compilation -->
     <NoWarn>$(NoWarn);CA1416</NoWarn>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
